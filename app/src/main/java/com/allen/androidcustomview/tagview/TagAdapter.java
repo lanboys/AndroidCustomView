@@ -1,11 +1,11 @@
 package com.allen.androidcustomview.tagview;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 
 import com.allen.androidcustomview.R;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by Allen on 2017/4/14.
- *
+ * <p>
  * 评论页面的适配器
  */
 
@@ -29,6 +29,21 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     public TagAdapter(List<TagBean> tagList) {
         this.tagList = tagList;
         selectList = new ArrayList<>();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        try {
+
+            if (tagList.get(position).getTag_name().length() > 9)
+                return 1;
+        } catch (Exception e) {
+            Log.e("type", e.getLocalizedMessage());
+            return 0;
+        }
+
+        return 0;
     }
 
     @Override
@@ -57,7 +72,6 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
                 }
             }
         });
-
     }
 
     @Override
@@ -66,6 +80,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+
         public TextView mTextView;
 
         public ViewHolder(View view) {
@@ -74,7 +89,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
         }
     }
 
-    public List<TagBean> getSelectData(){
+    public List<TagBean> getSelectData() {
         return selectList;
     }
 }
